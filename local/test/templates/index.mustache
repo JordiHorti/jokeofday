@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moodle courses</title>
+</head>
+<body>
+
+<div class="container">
+     <h1 class="title">Curso: <b>{{course}}</b></h1>
+
+    <img src="{{image_url}}" alt="curso de inglés" width="800" height="auto">
+
+    <h2>Cursos disponibles de la categoría: {{category_url}}</h2>
+
+   <table>
+       <tr>
+           <th>ID</th>
+           <th>Nombre del curso</th>
+           <th>Nombre Corto</th>
+       </tr>
+
+       {{#courses}} <!-- Itera sobre los cursos solo para las filas -->
+           <tr>
+               <td>{{id}}</td>
+               <td>{{fullname}}</td>
+               <td>{{shortname}}</td>
+           </tr>
+       {{/courses}}
+
+   </table>
+
+    {{^courses}}
+        <p>No hay cursos disponibles</p>
+    {{/courses}}
+
+    <p class="text">Cantidad de cursos de la categoría {{category_url}}: <b>{{courses_count}}</b></p>
+</div>
+
+<div class="container">
+    <h2>Cursos de otras categorías</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre del curso</th>
+                <th>Nombre Corto</th>
+            </tr>
+            {{#other_courses}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{fullname}}</td>
+                    <td>{{shortname}}</td>
+                </tr>
+            {{/other_courses}}
+        </table>
+
+
+    {{^other_courses}}
+        <p>No hay cursos de otras categorías disponibles</p>
+    {{/other_courses}}
+
+    <p class="text">Cantidad de cursos de otras categorías: <b>{{other_courses_count}}</b></p>
+
+    <p class="text">Cantidad de cursos totales: <b>{{total_courses}}</b></p>
+    <p>'Valor de category_url:' . {{category_url}};</p>
+    <h2>Crear un nuevo curso</h2>
+    <form method="post" action="">
+
+        <!-- Campo oculto para mantener la categoría original -->
+        <input type="hidden" name="category" value="{{category_url}}">
+        <input type="hidden" name="course" value="{{course}}">
+
+        <div class="form-group">
+            <label for="fullname">Nombre del curso:</label>
+            <input type="text" name="fullname" id="fullname" value="" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="shortname">Nombre corto:</label>
+            <input type="text" name="shortname" id="shortname" value="" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="idnumber">ID del curso:</label>
+            <input type="text" name="idnumber" id="idnumber" value="" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categoría:</label>
+            <input type="number" name="category" id="category" value="{{selected_category}}" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="summary">Resumen:</label>
+            <textarea name="summary" id="summary" class="form-control" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear curso</button>
+    </form>
+
+</div>
+
+</body>
+</html>
