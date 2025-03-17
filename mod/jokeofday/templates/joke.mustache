@@ -1,0 +1,67 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_jokeofday/joke
+
+    Vista del chiste
+
+    Example context (json):
+    {
+
+    }
+
+}}
+
+<div data-region="mod_jokeofday_joke" class="card" >
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">{{category}}</h6>
+        <div class="d-flex flex-wrap">
+            Flags:
+            {{#flags}}
+                <span class= "badge badge-pill badge-primary m-1"> {{.}}  </span>
+            {{/flags}}
+        </div>
+        <div>
+            <p class="card-text">{{text}}</p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <span>{{#str}} media, mod_jokeofday {{/str}}: <strong>{{media}}</strong></span>
+        <select class="form-select">
+            <option selected>{{#str}} question, mod_jokeofday {{/str}}</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+    </div>
+</div >
+
+<style>
+    [data-region="mod_jokeofday_joke"] {
+        width: 60rem;
+        margin: 10px;
+    }
+</style>
+
+{{#js}}
+    require(['mod_jokeofday/save_rate'], function(saveRate) {
+    saveRate.init('[data-region="mod_jokeofday_joke"]', '{{ id}}', '{{userId}}');
+    });
+{{/js}}
