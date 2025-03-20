@@ -27,11 +27,9 @@ function xmldb_jokeofday_upgrade($oldversion) {
     global $DB;
 
     if ($oldversion < 2025031000) {
-
         $table = new xmldb_table('jokeofday');
 
         if (!$DB->get_manager()->table_exists($table)) {
-
             $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, null);
             $table->add_field('course', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
             $table->add_field('name', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null, null);
@@ -45,7 +43,7 @@ function xmldb_jokeofday_upgrade($oldversion) {
             $table->add_field('flags', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
             $table->add_field('type', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'timemodified');
             $table->add_field('amount', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'timemodified');
-            $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+            $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
             if (!$DB->get_manager()->table_exists($table)) {
                 $DB->get_manager()->create_table($table);
@@ -55,39 +53,37 @@ function xmldb_jokeofday_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2025031000, 'jokeofday');
     }
 
-//    if ($oldversion < 2025031201) {
+// if ($oldversion < 2025031201) {
 //
-//        // Define la tabla 'jokeofday_joke'
-//        $table = new xmldb_table('jokeofday_joke');
+// Define la tabla 'jokeofday_joke'
+// $table = new xmldb_table('jokeofday_joke');
 //
-//        // Agrega los campos si no existen
-//        if (!$DB->get_manager()->table_exists($table)) {
-//            $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, null);
-//            $table->add_field('course', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
-//            $table->add_field('name', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null, null);
-//            $table->add_field('introformat', XMLDB_TYPE_INTEGER, '4', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
-//            $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
-//            $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
-//            $table->add_field('joke_name', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
-//            $table->add_field('joke', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
-//            $table->add_field('category', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'timemodified');
-//            $table->add_field('language', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'timemodified');
-//            $table->add_field('flags', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
-//            $table->add_field('type', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'timemodified');
-//            $table->add_field('amount', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'timemodified');
+// Agrega los campos si no existen
+// if (!$DB->get_manager()->table_exists($table)) {
+// $table->add_field('id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, null, null);
+// $table->add_field('course', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
+// $table->add_field('name', XMLDB_TYPE_TEXT, null, null, XMLDB_NOTNULL, null, null, null);
+// $table->add_field('introformat', XMLDB_TYPE_INTEGER, '4', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
+// $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
+// $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', null);
+// $table->add_field('joke_name', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
+// $table->add_field('joke', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
+// $table->add_field('category', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'timemodified');
+// $table->add_field('language', XMLDB_TYPE_CHAR, '10', null, null, null, null, 'timemodified');
+// $table->add_field('flags', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
+// $table->add_field('type', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'timemodified');
+// $table->add_field('amount', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'timemodified');
 //
-//            // Define la clave primaria
-//            $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+// Define la clave primaria
+// $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
 //
-//            // Crea la tabla si no existe
-//            $DB->get_manager()->create_table($table);
-//        }
+// Crea la tabla si no existe
+// $DB->get_manager()->create_table($table);
+// }
 //
-//        // Actualiza la versión de este plugin
-//        upgrade_mod_savepoint(true, 2025031200, 'jokeofday');
-//    }
+// Actualiza la versión de este plugin
+// upgrade_mod_savepoint(true, 2025031200, 'jokeofday');
+// }
 
     return true;
-
 }
-

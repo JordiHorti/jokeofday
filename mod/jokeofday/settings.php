@@ -14,11 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-
         $settings->add(new admin_setting_configtext(
             'mod_jokeofday/jokeofdayhost',
             get_string('config_server_url', 'mod_jokeofday'),
@@ -27,4 +25,3 @@ if ($ADMIN->fulltree) {
             PARAM_URL
         ));
 }
-

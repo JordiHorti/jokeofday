@@ -22,23 +22,23 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Chiste del día';
 $string['modulename'] = 'Chiste del día';
-$string['pluginadministration'] = 'Joke of the Day Administration';
 $string['name'] = 'Nombre';
 $string['name_help'] = 'Nombre del chiste';
-//$string['modulenameplural'] = 'Jokes of the Day';//$string['chiste'] = 'Añade el chiste del día';
+$string['pluginadministration'] = 'Joke of the Day Administration';
+$string['pluginname'] = 'Chiste del día';
+// $string['modulenameplural'] = 'Jokes of the Day';//$string['chiste'] = 'Añade el chiste del día';
 $string['category'] = 'Categoría';
 $string['language'] = 'Idioma';
 $string['flags'] = 'Flags';
 $string['type'] = 'Tipo';
-//$string['search'] = 'Buscar';
+// $string['search'] = 'Buscar';
 $string['amount'] = 'Puntuación';
 $string['amount_help'] = 'Por favor puntúa del 1 al 10 el chiste';
-//$string['joke_display'] = 'Chiste del día: ';
-//$string['get_joke'] = 'Obtener chiste';
-//$string['submit_button'] = 'Enviar puntuación';
-//$string['area'] = 'Area';
+// $string['joke_display'] = 'Chiste del día: ';
+// $string['get_joke'] = 'Obtener chiste';
+// $string['submit_button'] = 'Enviar puntuación';
+// $string['area'] = 'Area';
 $string['any'] = 'Cualquiera';
 $string['programming'] = 'Programación';
 $string['miscellaneous'] = 'Miscelania';
@@ -58,5 +58,7 @@ $string['config_general'] = 'Configuración general';
 $string['config_general_description'] = 'Aquí puedes configurar las opciones generales del módulo Joke of the Day.';
 $string['config_server_url'] = 'URL del servidor';
 $string['config_server_url_description'] = 'Introduce la URL del servidor de la API que proporciona los chistes.';
+$string['error_get_rating'] = 'Error al recuperar la puntuación';
+$string['error_saving_rating'] = 'Error guardando la puntuación';
+$string['succes_missage'] = 'Puntuación guardada con éxito';
 $string['media'] = 'Puntuación';
-

@@ -94,7 +94,7 @@ module.exports = grunt => {
             }
 
             queueRunner = setTimeout(() => {
-                const limit = Math.max(1, require('os').cpus().length / 2);
+                const limit = 1;//Math.max(1, require('os').cpus().length / 2);
                 grunt.log.debug(`Starting rollup with queue size of ${limit}`);
                 runQueue(limit);
             }, 100);

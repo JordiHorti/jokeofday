@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * Moodle api used to connect with api
  *
@@ -12,8 +27,7 @@ namespace mod_jokeofday\request;
 use curl;
 use stdClass;
 
-class jokeapi
-{
+class jokeapi {
     /**
      * get joke of the  API
      *
@@ -25,8 +39,7 @@ class jokeapi
      * @return mixed Devuelve un objeto con los datos del chiste o null en caso de error.
      * @throws \dml_exception
      */
-    public function get_joke($category, $language, $flags, $type, $amount)
-    {
+    public function get_joke($category, $language, $flags, $type, $amount) {
         global $DB, $COURSE;
 
         $url = $url = get_config('mod_jokeofday', 'jokeofdayhost');
@@ -36,37 +49,34 @@ class jokeapi
         $response = $curl->get($url);
 
         $joke = json_decode($response);
-
-        if ($amount > 1) {
-            $jokes = $joke->jokes;
-        }
-        else{
-            $jokes = [$joke->joke];
-        }
-
-        foreach ($jokes as $joke) {
-            $data = new stdClass();
-            $data->joke_id = $joke->id;
-            $data->lang = $joke->lang;
-            $data->category = $joke->category;
-            if ($joke->type === 'twopart') {
-                $data->joke = $joke->setup . "<br>" . $joke->delivery;
+        if ($joke->error != true) {
+            if ($amount > 1) {
+                $jokes = $joke->jokes;
             } else {
-                $data->joke = $joke->joke;
+                $jokes = [$joke->joke];
             }
 
-            $data->flags = $flags;
+            foreach ($jokes as $joke) {
+                $data = new stdClass();
+                $data->joke_id = $joke->id;
+                $data->lang = $joke->lang;
+                $data->category = $joke->category;
+                if ($joke->type === 'twopart') {
+                    $data->joke = $joke->setup . "<br>" . $joke->delivery;
+                } else {
+                    $data->joke = $joke->joke;
+                }
 
-            $exists = $DB->record_exists('jokeofday_joke', ['joke_id' => $data->joke_id]);
+                $data->flags = $flags;
 
-            if( !$exists){
-                $data->id = $DB->insert_record('jokeofday_joke',$data);
+                $exists = $DB->record_exists('jokeofday_joke', ['joke_id' => $data->joke_id]);
+
+                if (!$exists) {
+                    $data->id = $DB->insert_record('jokeofday_joke', $data);
+                }
             }
-
         }
 
         return json_decode($response);
-
     }
 }
-

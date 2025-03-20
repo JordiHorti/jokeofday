@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -26,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die;
 global $CFG;
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
 
 class mod_jokeofday_mod_form extends moodleform_mod {
     /**
@@ -36,13 +35,13 @@ class mod_jokeofday_mod_form extends moodleform_mod {
         global $PAGE;
 
         $customcategories = [
-            'Any' => get_string('any','jokeofday'),
-            'Programming' => get_string('programming','jokeofday'),
-            'Misc' => get_string('misc','jokeofday'),
-            'Dark' => get_string('dark','jokeofday'),
-            'Pun' => get_string('pun','jokeofday'),
-            'Spooky' => get_string('spooky','jokeofday'),
-            'Christmas' => get_string('christmas','jokeofday'),
+            'Any' => get_string('any', 'jokeofday'),
+            'Programming' => get_string('programming', 'jokeofday'),
+            'Misc' => get_string('misc', 'jokeofday'),
+            'Dark' => get_string('dark', 'jokeofday'),
+            'Pun' => get_string('pun', 'jokeofday'),
+            'Spooky' => get_string('spooky', 'jokeofday'),
+            'Christmas' => get_string('christmas', 'jokeofday'),
 
         ];
 
@@ -56,15 +55,15 @@ class mod_jokeofday_mod_form extends moodleform_mod {
         ];
         $customflags = [
             'nsfw' => 'nsfw',
-            'religious' =>'religious',
+            'religious' => 'religious',
             'political' => 'political',
             'racist' => 'racist',
             'sexist' => 'sexist',
-            'explicit' => 'explicit'
+            'explicit' => 'explicit',
         ];
         $customtypes = [
             'single' => 'single',
-            'twopart' => 'twopart'
+            'twopart' => 'twopart',
         ];
 
 
@@ -73,14 +72,14 @@ class mod_jokeofday_mod_form extends moodleform_mod {
         $mform = $this->_form;
 
         // Campo para nombre
-        $mform->addElement('text', 'name', get_string('name', 'jokeofday'), ['size'=>'25','maxlength'=>'255']);
+        $mform->addElement('text', 'name', get_string('name', 'jokeofday'), ['size' => '25', 'maxlength' => '255']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addHelpButton('name', 'name', 'jokeofday');
 
         $this->standard_intro_elements();
 
         // Campo para seleccionar categoría
-        $category= $mform->addElement('select', 'category', get_string('category', 'jokeofday'), $customcategories);
+        $category = $mform->addElement('select', 'category', get_string('category', 'jokeofday'), $customcategories);
         $category->setMultiple(true);
 
         // Campo para seleccionar idioma
@@ -94,17 +93,16 @@ class mod_jokeofday_mod_form extends moodleform_mod {
         // Campo para seleccionar tipo de broma
         $mform->addElement('select', 'type', get_string('type', 'jokeofday'), $customtypes);
 
-        $mform->addElement('text', 'amount', get_string('amount', 'jokeofday'), ['size'=>'10','maxlength'=>'5']);
+        $mform->addElement('text', 'amount', get_string('amount', 'jokeofday'), ['size' => '10', 'maxlength' => '5']);
         $mform->setType('amount', PARAM_INT);
         $mform->addHelpButton('amount', 'amount', 'jokeofday');
 
         $this->standard_coursemodule_elements();
 
         $this->add_action_buttons();
-
-}
+    }
     function validation($data, $files) {
-        $errors = array();
+        $errors = [];
 
         if (!is_numeric($data['amount']) || (int)$data['amount'] <= 0) {
             $errors['amount'] = get_string('amount_error', 'jokeofday');

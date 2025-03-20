@@ -14,9 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package mod_jokeofday
- * @author  2025 3iPunt <https://www.tresipunt.com/>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package
  */
 
 /* eslint-disable no-unused-vars */
@@ -26,40 +24,68 @@ define([
     'jquery',
     'core/ajax',
 
-], function($, Str, Ajax) {
+], function ($, Ajax) {
     "use strict";
+
+    let ACTIONS = {
+        RATING: '[data-action="rating"]'
+    };
+    let SERVICES = {
+        RATING: 'mod_jokeofday_save_rating'
+    };
+
+
+    /**
+     * @param {String} region
+     * @param {Number} id
+     * @constructor
+     */
+    function Joke(region, id) {
+        console.log('Entra por constructor', id);
+        this.node = $(region);
+        this.id = id;
+        console.log('Joke ID:', this.id);
+        this.text = this.node.find('.card-text').text();
+        this.node.find(ACTIONS.RATING + '[data-id="' + id + '"]').on('change', this.changeRating.bind(this));
+    }
+
+    Joke.prototype.changeRating = function (e) {
+        let rating = $(e.currentTarget).val();
+        console.log("Rating:", rating);
+        console.log("Joke ID:", this.id);
+
+        const request = {
+            methodname: SERVICES.RATING,
+            args: {
+                rating: rating,
+                jokeid: this.id,
+            }
+        };
+        Ajax.call([request])[0].done(function (response) {
+            console.log(response);
+            if (response.status == 1) {
+                // eslint-disable-next-line no-alert
+                alert(response.message);
+            } else if (response.status === 'error') {
+                // eslint-disable-next-line no-alert
+                alert(response.message);
+            }
+        }).fail(function (fail) {
+            console.log(fail);
+        });
+    };
+
+    Joke.prototype.node = null;
 
     return {
         /**
-         * @param {int} region
-         * @return {Prueba}
+         * @param {String} region
+         * @param {Number} id
+         * @return {Joke}
          */
-        init: function(selector) {
-            console.log('Iniciamos JS');
-            const jokeContainer = $(selector);
-            const ratingSelect = jokeContainer.find(".form-select");
-
-            ratingSelect.on('change', function() {
-
-                const score = $(this).val();
-                const timecreated = new Date().toISOString();
-
-                let request = {
-                    args: {
-                        userid: jokeContainer.data('user-id'),
-                        jokeid: jokeContainer.data('joke-id'),
-                        score: score,
-                        joke: jokeContainer.find('.joke-text').text(),
-                        timecreated: timecreated
-                    }
-                };
-
-                Ajax.call([request])[0].done(function(response){
-                    alert('Puntuación guardada con éxito' + response);
-                }).fail(function (error){
-                  alert('Error guardando la puntuación: ' +  error)
-                });
-            });
+        init: function (region, id) {
+            console.log('Iniciamos JS', region, id);
+            return new Joke(region, id);
         }
     };
 });

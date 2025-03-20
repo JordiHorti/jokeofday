@@ -25,23 +25,23 @@
 namespace mod_jokeofday\output;
 
 
-
+use mod_jokeofday\models\Joke;
 use mod_jokeofday\request\jokeapi;
 use renderable;
 use renderer_base;
 use stdClass;
 use templatable;
 
-class view_page implements templatable, renderable {
+class view_page implements renderable, templatable {
     /**
      * Exports the navigation buttons around the book.
      *
      * @param renderer_base $output renderer base output.
      * @return stdClass Data to render.
      * @throws \coding_exception
+     * @throws \dml_exception
      */
-    public function export_for_template(renderer_base $output): stdClass
-    {
+    public function export_for_template(renderer_base $output): stdClass {
         global $DB, $USER;
 
         $cmid = optional_param('id', 0, PARAM_INT);
@@ -54,56 +54,75 @@ class view_page implements templatable, renderable {
         $data->title = get_string('pluginname', 'mod_jokeofday');
         $data->userId = $USER->id;
         $data->id = $instance->id;
+        /*
+        // Para pruebas de error
+         $instance->category .= "error";
+        */
 
-        //Para pruebas de error
-        $instance->category .= "error";
         $jokeapi = new jokeapi();
-        $jokedata = $jokeapi->get_joke($instance->category, $instance->language, $instance->flags, $instance->type,  $instance->amount);
+        $jokedata = $jokeapi->get_joke(
+            $instance->category,
+            $instance->language,
+            $instance->flags,
+            $instance->type,
+            $instance->amount
+        );
+
         $jokes = [];
 
-
-        if($jokedata->error){
+        if ($jokedata->error) {
             $error = true;
             $data->errormessage = $jokedata->additionalInfo;
-
-        }else {
+        } else {
             $error = false;
             $jokesdata = $jokedata->jokes ?? [$jokedata->joke];
 
-            foreach($jokesdata as $j){
-                $joke = new stdClass();
-                $joke->category = $j->category;
-                $joke->flags= $this->get_joke_flags($j);
-                $joke->text = $this->get_joke_text($j);
-                $joke->media = $this->get_joke_media($j);
-                $jokes[] = $joke;
-            }
+            foreach ($jokesdata as $j) {
+                $flags = [$j->flags];
+                $joke = new Joke(
+                    $j->id,
+                    $j->category,
+                    $j->joke,
+                    $j->lang,
+                    $flags
+                );
 
+                $jokes[] = [
+                    'id' => $joke->jokeid,
+                    'category' => $joke->category,
+                    'text' => $joke->text,
+                    'flags' => $joke->get_flags(),
+                    'media' => $joke->get_media(),
+                    'score' => $joke->score->score,
+                ];
+            }
         }
-//
-//        echo '<pre>';
-//        var_dump($jokedata);
-//        die();
         $data->jokes = $jokes;
+
         $data->error = $error;
 
         return $data;
     }
-    protected function get_joke_text($joke) {
-
-        return $joke->joke ?? $joke->jokes;
-    }
-    protected function get_joke_media($joke) {
-        //TODO: Crear método para pintar la media
-        return 5.5;
-    }
-    protected function get_joke_flags($joke) {
-        foreach($joke->flags as $flag => $value){
-            if($value === true) {
-                $flags[] = $flag;
-            }
-        }
-        return $flags ?? [];
-    }
-
+// protected function get_joke_text($joke) {
+//
+// return $joke->joke ?? $joke->jokes;
+// }
+// protected function get_joke_media($joke) {
+// global $DB;
+//
+// $sql = "SELECT AVG(score) AS rating FROM {jokeofday_score} WHERE joke_id = :jokeid";
+// $param = ['jokeid' => $joke->id];
+//
+// $rating = $DB->get_field_sql($sql, $param);
+//
+// return round($rating, 2);
+// }
+// protected function get_joke_flags($joke) {
+// foreach ($joke->flags as $flag => $value) {
+// if ($value === true) {
+// $flags[] = $flag;
+// }
+// }
+// return $flags ?? [];
+// }
 }

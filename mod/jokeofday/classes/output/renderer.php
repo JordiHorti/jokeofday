@@ -28,7 +28,6 @@ use core\exception\moodle_exception;
 use plugin_renderer_base;
 
 class renderer extends plugin_renderer_base {
-
     /**
      * Renderers the main action menu.
      *

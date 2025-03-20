@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,23 +28,33 @@ defined('MOODLE_INTERNAL') || die;
  * @return mixed True if module supports feature, false if not, null if doesn't know or string for the module purpose.
  */
 function jokeofday_supports($feature) {
-    switch($feature) {
-        case FEATURE_MOD_ARCHETYPE:           return MOD_ARCHETYPE_RESOURCE;
-        case FEATURE_GROUPS:                  return false;
-        case FEATURE_GROUPINGS:               return false;
-        case FEATURE_MOD_INTRO:               return true;
-        case FEATURE_COMPLETION_TRACKS_VIEWS: return false;
-        case FEATURE_GRADE_HAS_GRADE:         return false;
-        case FEATURE_GRADE_OUTCOMES:          return false;
-        case FEATURE_BACKUP_MOODLE2:          return false;
-        case FEATURE_SHOW_DESCRIPTION:        return true;
-        case FEATURE_MOD_PURPOSE:             return MOD_PURPOSE_COLLABORATION;
+    switch ($feature) {
+        case FEATURE_MOD_ARCHETYPE:
+            return MOD_ARCHETYPE_RESOURCE;
+        case FEATURE_GROUPS:
+            return false;
+        case FEATURE_GROUPINGS:
+            return false;
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return false;
+        case FEATURE_GRADE_HAS_GRADE:
+            return false;
+        case FEATURE_GRADE_OUTCOMES:
+            return false;
+        case FEATURE_BACKUP_MOODLE2:
+            return false;
+        case FEATURE_SHOW_DESCRIPTION:
+            return true;
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_COLLABORATION;
 
-        default: return null;
+        default:
+            return null;
     }
-
 }
-function jokeofday_add_instance($data, $mform){
+function jokeofday_add_instance($data, $mform) {
     global $CFG, $DB;
 
     $data->timemodified = time();
@@ -65,7 +74,7 @@ function jokeofday_add_instance($data, $mform){
  * @param stdClass $mform
  * @return bool true
  */
-function jokeofday_update_instance($data, $mform){
+function jokeofday_update_instance($data, $mform) {
     global $CFG, $DB;
 
     $data->timemodified = time();
@@ -90,9 +99,9 @@ function jokeofday_update_instance($data, $mform){
 function jokeofday_delete_instance($id) {
     global $DB;
 
-     if (! $jokeofday = $DB->get_record('jokeofday', ['id' => $id])) {
-         return false;
-     }
+    if (! $jokeofday = $DB->get_record('jokeofday', ['id' => $id])) {
+        return false;
+    }
 
     $result = true;
 
@@ -102,4 +111,3 @@ function jokeofday_delete_instance($id) {
 
     return $result;
 }
-

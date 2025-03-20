@@ -18,8 +18,8 @@
 
 use mod_jokeofday\output\view_page;
 
-require(__DIR__.'/../../config.php');
-global $PAGE,$OUTPUT;
+require(__DIR__ . '/../../config.php');
+global $PAGE, $OUTPUT;
 
 $id = required_param('id', PARAM_INT);
 [$course, $cm] = get_course_and_cm_from_cmid($id);

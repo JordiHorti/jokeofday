@@ -40,8 +40,8 @@
         </div>
     </div>
     <div class="card-footer">
-        <span>{{#str}} media, mod_jokeofday {{/str}}: <strong>{{media}}</strong></span>
-        <select class="form-select">
+        <span>{{#str}} media, mod_jokeofday {{/str}}: <strong class="data-media">{{media}}</strong></span>
+        <select class="form-select" data-action="rating" data-id="{{id}}">
             <option selected>{{#str}} question, mod_jokeofday {{/str}}</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -61,7 +61,7 @@
 </style>
 
 {{#js}}
-    require(['mod_jokeofday/save_rate'], function(saveRate) {
-    saveRate.init('[data-region="mod_jokeofday_joke"]', '{{ id}}', '{{userId}}');
+    require(['mod_jokeofday/save_rate'], function(obj) {
+    obj.init('[data-region="mod_jokeofday_joke"]', {{id}});
     });
 {{/js}}
