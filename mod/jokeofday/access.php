@@ -18,7 +18,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-    // Capacidad para añadir una instancia del módulo
     'mod/jokeofday:addinstance' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -28,10 +27,9 @@ $capabilities = [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
         ],
-        'clonepermissionsfrom' => 'moodle/course:addmodule', // Copiar permisos desde el módulo estándar
+        'clonepermissionsfrom' => 'moodle/course:addmodule',
     ],
 
-    // Puedes agregar más capacidades según sea necesario. Por ejemplo:
     'mod/jokeofday:view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,

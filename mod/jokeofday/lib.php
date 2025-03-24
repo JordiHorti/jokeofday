@@ -78,6 +78,7 @@ function jokeofday_update_instance($data, $mform) {
     global $CFG, $DB;
 
     $data->timemodified = time();
+    $data->category = is_array($data->category) ? implode(',', $data->category) : $data->category;
 
     $data->flags = implode(',', $data->flags);
 

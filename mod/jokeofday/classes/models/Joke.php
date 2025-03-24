@@ -44,7 +44,7 @@ class Joke {
     public string $lang;
 
     /** @var array Flags indicating content warnings ( NSFW, political, etc.) */
-    public array $flags;
+    public string $flags;
 
     /** @var object Score */
     public Score $score;
@@ -55,7 +55,7 @@ class Joke {
         string $category = '',
         string $text = '',
         string $lang = '',
-        array $flags = [],
+        string $flags = '',
     ) {
         $this->jokeid = $jokeid;
         $this->category = $category;
@@ -79,17 +79,5 @@ class Joke {
 
         return round($rating, 2);
     }
-    /**
-     * Get the flags of the joke.
-     *
-     * @return array The flags of the joke.
-     */
-    public function get_flags() {
-        foreach ($this->flags as $flag => $value) {
-            if ($value === true) {
-                $flags[] = $flag;
-            }
-        }
-        return $flags ?? [];
-    }
+
 }

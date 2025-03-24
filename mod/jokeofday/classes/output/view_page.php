@@ -67,37 +67,36 @@ class view_page implements renderable, templatable {
             $instance->type,
             $instance->amount
         );
-
+//var_dump($jokedata);
         $jokes = [];
-
         if ($jokedata->error) {
             $error = true;
             $data->errormessage = $jokedata->additionalInfo;
         } else {
             $error = false;
-            $jokesdata = $jokedata->jokes ?? [$jokedata->joke];
-
-            foreach ($jokesdata as $j) {
-                $flags = [$j->flags];
+             $jokesdata = $jokedata->jokes ?? [$jokedata->joke];
+            foreach ($jokedata as $j) {
                 $joke = new Joke(
                     $j->id,
                     $j->category,
                     $j->joke,
                     $j->lang,
-                    $flags
+                    $j->flags
                 );
 
                 $jokes[] = [
                     'id' => $joke->jokeid,
                     'category' => $joke->category,
                     'text' => $joke->text,
-                    'flags' => $joke->get_flags(),
+                    'flags' => $j->flags,
                     'media' => $joke->get_media(),
                     'score' => $joke->score->score,
                 ];
             }
         }
         $data->jokes = $jokes;
+
+       // var_dump($joke->get_flags());
 
         $data->error = $error;
 

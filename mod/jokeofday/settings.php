@@ -24,4 +24,11 @@ if ($ADMIN->fulltree) {
             'https://v2.jokeapi.dev/',
             PARAM_URL
         ));
+        $settings->add(new admin_setting_configtext(
+            'mod_jokeofday/cache_expiry_time',
+            get_string('cache_expiry_time', 'mod_jokeofday'),
+            get_string('cache_expiry_time_desc', 'mod_jokeofday'),
+            1440,
+            PARAM_INT
+        ));
 }

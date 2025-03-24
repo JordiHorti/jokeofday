@@ -19,7 +19,7 @@
 use mod_jokeofday\output\view_page;
 
 require(__DIR__ . '/../../config.php');
-global $PAGE, $OUTPUT;
+global $PAGE, $OUTPUT, $CFG;
 
 $id = required_param('id', PARAM_INT);
 [$course, $cm] = get_course_and_cm_from_cmid($id);
@@ -32,13 +32,20 @@ $PAGE->set_url('/mod/jokeofday/view.php', ['id' => $cm->id]);
 $PAGE->set_title('Este es el título');
 $PAGE->set_heading('Este es el título');
 
+echo '<div class="container w-800">';
 // Print the page header.
 echo $OUTPUT->header();
-
+if (has_capability('moodle/course:update', $context)) {
+    echo '<div class="button-container m-auto">';
+    echo '<a href="' . $CFG->wwwroot . '/mod/jokeofday/report.php?id=' . $cm->id . '" class="btn btn-primary">' .
+        get_string('viewreport', 'mod_jokeofday') . '</a>';
+    echo '</div>';
+}
 $renderer = $PAGE->get_renderer('mod_jokeofday');
 
 $page = new view_page();
 
 echo $renderer->render($page);
+echo '</div>';
 
 echo $OUTPUT->footer();
